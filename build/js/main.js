@@ -1,54 +1,53 @@
 "use strict";
-let stringArr = ["one", "two", "three"];
-let guitars = ["one", 2, "three"];
-let mixedArray = ["one", 2, true];
-stringArr[0] = "John";
-stringArr.push("hey");
-guitars[0] = 1984;
-guitars.unshift("Jim");
-let test = [];
-let bands = [];
-bands.push("One direction");
-//Tuple
-let myTuple = ["majid", 42, true];
-let mixed = ["John", 1, false];
-myTuple[1] = 12;
-//objects
-let myObj;
-//? an object can be a [] or {}
-myObj = [];
-myObj = bands;
-myObj = {};
-const exampleObj = {
-    prop1: "Majid",
-    prop2: true,
+//? literal types
+let myName;
+let username;
+username = "majid";
+//? functions
+//? return type is in here is number
+function add(a, b) {
+    return a + b;
+}
+//? void for functions that don't return anything
+const logMsg = (msg) => {
+    console.log(msg);
 };
-exampleObj.prop1 = "John";
-const evh = {
-    name: "Eddie",
-    active: false,
-    albums: [1984, 5153, "OU812"],
+logMsg("hello world");
+logMsg(add(1, 2));
+// interface mathFunction {
+//   (a: number, b: number): number;
+// }
+let multiply = function (a, b) {
+    return a * b;
 };
-let jp = {
-    name: "Jimmy",
-    active: true,
-    albums: [1989, "I"],
+logMsg(multiply(2, 3));
+//? optional parameters
+const addAll = (a, b, c) => {
+    if (c)
+        return a + b + c;
+    return a + b;
 };
-//we declared function with Guitarist type
-const greetGuitarist = (guitarist) => {
-    if (guitarist.name)
-        return `Hello ${guitarist.name.toUpperCase()}`;
-    return `Hello..`;
+// console.log(addAll(1, 2));
+// console.log(addAll(1, 2, 3));
+//? if c is not provided, it will be 2
+const sumAll = (a = 10, b, c = 2) => {
+    return a + b + c;
 };
-console.log(greetGuitarist(jp));
-// Enums
-// Enums is additional feature in typscript that is not in javascript
-var Grade;
-(function (Grade) {
-    Grade[Grade["U"] = 1] = "U";
-    Grade[Grade["D"] = 2] = "D";
-    Grade[Grade["c"] = 3] = "c";
-    Grade[Grade["B"] = 4] = "B";
-    Grade[Grade["A"] = 5] = "A";
-})(Grade || (Grade = {}));
-console.log(Grade.A);
+logMsg(sumAll(1, 1));
+logMsg(sumAll(1, 1, 3));
+logMsg(sumAll(undefined, 1, 1));
+///? Rest parameters
+const total = (a, ...numbers) => {
+    return a + numbers.reduce((acc, cur) => acc + cur);
+};
+logMsg(total(1, 2, 3));
+const createError = (msg) => {
+    throw new Error(msg);
+};
+//? never type 
+const infiniteLoop = () => {
+    let i = 0;
+    while (true) {
+        i++;
+    }
+};

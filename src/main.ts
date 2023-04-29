@@ -1,85 +1,87 @@
-let stringArr = ["one", "two", "three"];
+//? type alias
+type stringOrNumber = string | number;
+type stringOrNumberarray = (string | number)[];
 
-let guitars = ["one", 2, "three"];
-
-let mixedArray = ["one", 2, true];
-
-stringArr[0] = "John";
-stringArr.push("hey");
-
-guitars[0] = 1984;
-guitars.unshift("Jim");
-
-let test = [];
-let bands: string[] = [];
-bands.push("One direction");
-
-//Tuple
-let myTuple: [string, number, boolean] = ["majid", 42, true];
-let mixed = ["John", 1, false];
-
-myTuple[1] = 12;
-
-//objects
-let myObj: object;
-
-//? an object can be a [] or {}
-myObj = [];
-myObj = bands;
-myObj = {};
-
-const exampleObj = {
-  prop1: "Majid",
-  prop2: true,
-};
-
-exampleObj.prop1 = "John";
-
-//interface can also be used just like type
-
-//interface Guitarist {
-//   name: string;
-//   active?: boolean; //optional
-//   albums: (string | number)[];
-// }
-
-//object with a type
 type Guitarist = {
-  name?: string; //optional
+  name: string;
   active?: boolean; //optional
-  albums: (string | number)[];
+  albums: stringOrNumberarray;
 };
 
-const evh: Guitarist = {
-  name: "Eddie",
-  active: false,
-  albums: [1984, 5153, "OU812"],
-};
+type userId = stringOrNumber;
 
-let jp: Guitarist = {
-  name: "Jimmy",
-  active: true,
-  albums: [1989, "I"],
-};
+//? literal types
+let myName: "majid";
 
-//we declared function with Guitarist type
-const greetGuitarist = (guitarist: Guitarist) => {
-  if (guitarist.name) return `Hello ${guitarist.name.toUpperCase()}`;
+let username: "majid" | "ali" | "reza";
+username = "majid";
 
-  return `Hello..`;
-};
-
-console.log(greetGuitarist(jp));
-
-// Enums
-// Enums is additional feature in typscript that is not in javascript
-
-enum Grade {
-  U = 1,
-  D,
-  c,
-  B,
-  A,
+//? functions
+//? return type is in here is number
+function add(a: number, b: number): number {
+  return a + b;
 }
 
-console.log(Grade.A);
+//? void for functions that don't return anything
+const logMsg = (msg: any): void => {
+  console.log(msg);
+};
+
+logMsg("hello world");
+logMsg(add(1, 2));
+
+//? explain this line of code
+
+type mathFunction = (a: number, b: number) => number;
+
+// interface mathFunction {
+//   (a: number, b: number): number;
+// }
+
+let multiply: mathFunction = function (a, b) {
+  return a * b;
+};
+
+logMsg(multiply(2, 3));
+
+//? optional parameters
+const addAll = (a: number, b: number, c?: number): number => {
+  if (c) return a + b + c;
+
+  return a + b;
+};
+
+// console.log(addAll(1, 2));
+// console.log(addAll(1, 2, 3));
+
+//? if c is not provided, it will be 2
+const sumAll = (a: number = 10, b: number, c: number = 2): number => {
+  return a + b + c;
+};
+
+logMsg(sumAll(1, 1));
+logMsg(sumAll(1, 1, 3));
+logMsg(sumAll(undefined, 1, 1));
+
+///? Rest parameters
+const total = (a: number, ...numbers: number[]): number => {
+  return a + numbers.reduce((acc, cur) => acc + cur);
+};
+
+logMsg(total(1, 2, 3));
+
+
+
+
+const createError = (msg: string): never => {
+  throw new Error(msg);
+};
+
+
+//? never type 
+const infiniteLoop = () => {
+  let i = 0;
+  while (true) {
+    i++;
+  }
+};
