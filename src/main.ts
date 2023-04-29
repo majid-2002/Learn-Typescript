@@ -1,9 +1,23 @@
-let username = "majid";
-console.log(username);
+let myName = 'majid'
+let meaningOfLIfe: number;
+let isLoading: boolean;
+let album: any; //? any type
 
-let a = 12;
-let b = "6";
-let c = 2;
+myName = "Jhon"
+meaningOfLIfe = 42
+isLoading = true
+album = 1979
 
-console.log(a / b);
-console.log(c * b);
+
+
+//? (): number => is the return type of the function
+const sum = (a: number, b: number): number => {
+    return a + b
+}
+
+
+let postId : string | number;
+let isActive : boolean | string;
+
+//? regular expression
+let re: RegExp = /\w+/g;
