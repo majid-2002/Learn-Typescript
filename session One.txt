@@ -1,0 +1,12 @@
+//? session One
+
+tsc main.js //to compile the file
+tsc --init //to init ts config file
+tsc main.js -w //to watch the file for changes
+tsc -w //to watch all changes throughout the file
+
+
+//? session two
+
+- statically typed = checked datatype while compiling, eg: typescript
+- dynamically typed = checked datatype while compiling, eg: javascript
