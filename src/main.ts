@@ -1,122 +1,80 @@
-class Coder {
-  secondLang!: string;
-
-  constructor(
-    public readonly name: string,
-    public music: string,
-    private age: number,
-    protected lang: string = "Typescript"
-  ) {
-    this.name = name;
-    this.age = age;
-    this.music = music;
-    this.lang = lang;
-  }
-
-  public getAge() {
-    return `Hello I am ${this.age}`;
-  }
+//Index Signatures
+interface TransactionObj {
+  readonly [index: string]: number; // An index signature that specifies that all keys should have a value of type number
+  Pizza: number;
+  Books: number;
+  Job: number;
 }
 
-const Majid = new Coder("majid", "Rock", 21); //? object of class
+const todaysTransactions: TransactionObj = {
+  Pizza: 20,
+  Books: 10,
+  Job: 30,
+};
 
-class WebDev extends Coder {
-  constructor(
-    public computer: string,
-    name: string,
-    music: string,
-    age: number
-  ) {
-    super(name, music, age);
-    this.computer = computer;
+console.log(todaysTransactions.Pizza); // Accessing a value using dot notation
+let prop = "Pizza";
+console.log(todaysTransactions[prop]); // Accessing a value using square bracket notation
+
+const todaysNet = (transactions: TransactionObj): number => {
+  let total = 0;
+  for (const transaction in transactions) { // Looping through all keys in the object
+    total += transactions[transaction]; // Accessing a value using square bracket notation
   }
+  return total;
+};
 
-  //? lang is acceessible in its child class but the age is not accessible in its child class on
-  public getLang() {
-    return `My language is ${this.lang}`;
-  }
-}
+console.log(todaysNet(todaysTransactions));
 
-const Majid2 = new WebDev("Mac", "majid", "Lofi", 23); //? object of class
+//todaysTransactions.Pizza = 40 // Error: Cannot assign to 'Pizza' because it is a read-only property
 
-// console.log(Majid2.getLang());
-// console.log(Majid2.age);
-// console.log(Majid2.lang);
+console.log(todaysTransactions['Dave']) // Undefined because 'Dave' is not a key in the object
 
-/////////////////////////// Interaces ///////////////////////////
+///////////////////////////////////
 
-interface Musician {
+interface Student {
   name: string;
-  instrument: string;
-  play(action: string): string;
+  GPA: number;
+  classes?: number[];
 }
 
-class Guitarist implements Musician {
-  name: string;
-  instrument: string;
-
-  constructor(name: string, instrument: string) {
-    this.name = name;
-    this.instrument = instrument;
-  }
-
-  play(action: string) {
-    return `${this.name} ${action} the ${this.instrument}`;
-  }
+const student: Student = {
+  name: "Doug",
+  GPA: 3.5,
+  classes: [100, 200]
 }
 
-const Page = new Guitarist("Jimmy", "Guitar");
-// console.log(Page.play("strums"));
-
-////////////////////////////////////////
-
-class Peeps {
-  static count: number = 0;
-
-  static getCount() {
-    return this.count;
-  }
-
-  public id: number;
-
-  constructor(public name: string) {
-    this.name = name;
-    this.id = ++Peeps.count;
-  }
+for (const key in student) { // Looping through all keys in the object
+  console.log(`${key}: ${student[key as keyof Student]}`) // Accessing a value using square bracket notation
 }
 
-const John = new Peeps("John");
-const Paul = new Peeps("Paul");
-const Ringo = new Peeps("Ringo");
+Object.keys(student).map(key => {
+  console.log(student[key as keyof typeof student]) // Accessing a value using square bracket notation
+})
 
-// console.log(John.id);
-// console.log(Paul.id);
-// console.log(Ringo.id);
-// console.log(Peeps.count);
-
-class Bands {
-  private dataState: string[];
-
-  constructor() {
-    this.dataState = [];
-  }
-
-  public get data(): string[] {
-    return this.dataState;
-  }
-
-  public set data(value: string[]) {
-    if (Array.isArray(value) && value.every((el) => typeof el === "string")) {
-      this.dataState = value;
-    } else throw new Error("Param is not array of strings");
-  }
+const logStudentKey = (student: Student, key: keyof Student): void => {
+  console.log(`Student ${key}: ${student[key]}`) // Accessing a value using square bracket notation
 }
 
-const MyBands = new Bands();
+logStudentKey(student, 'name')
 
-//setter
-MyBands.data = ["The Beatles", "The Who", "The Kinks"];
-//getter
-console.log(MyBands.data);
-MyBands.data = [...MyBands.data, "The Doors"];
-console.log(MyBands.data);
+
+//////////////////////////////////////////////////////////////////////
+// interface Incomes {
+//   [key: string]: number
+
+// }
+
+
+type Streams = 'salary' | 'bonus' | 'sidehustle' // Defining a union type of string literals
+type Incomes = Record<Streams, number> // Using Record utility type to create a new mapped type where all keys in the Streams union have a corresponding value of type number
+
+const monthlyIncomes: Incomes = {
+    salary: 500,
+    bonus: 100,
+    sidehustle: 250
+}
+
+for (const revenue in monthlyIncomes) { // Looping through all keys in the object
+    console.log(monthlyIncomes[revenue as keyof Incomes]) // Accessing a value using square bracket notation
+}
