@@ -1,5 +1,7 @@
 //? session One
 
+npm i typescript -g
+
 tsc main.js //to compile the file
 tsc --init //to init ts config file
 tsc main.js -w //to watch the file for changes
