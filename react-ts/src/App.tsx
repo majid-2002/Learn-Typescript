@@ -1,10 +1,13 @@
 import './App.css'
 import CounterWithUseReducer from './components/HooksExamples/CounterWithUseReducer'
+import { CounterProvider } from './components/Context/CounterContext'
 
 function App() {
   return (
     <>
-      <CounterWithUseReducer />
+      <CounterProvider>
+        <CounterWithUseReducer />
+      </CounterProvider>
     </>
   )
 }
